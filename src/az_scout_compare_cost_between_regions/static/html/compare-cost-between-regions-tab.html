@@ -1,0 +1,414 @@
+<!-- Cost Comparison — 3-step workflow -->
+<div class="ccbr-container">
+
+    <!-- Step indicators -->
+    <div class="ccbr-steps mb-3">
+        <div class="ccbr-step active" id="ccbr-step-ind-1" data-step="1" role="button">
+            <span class="ccbr-step-num">1</span>
+            <span class="ccbr-step-label">Prerequisites</span>
+        </div>
+        <div class="ccbr-step-line"></div>
+        <div class="ccbr-step" id="ccbr-step-ind-2" data-step="2" role="button">
+            <span class="ccbr-step-num">2</span>
+            <span class="ccbr-step-label">Usage Analysis</span>
+        </div>
+        <div class="ccbr-step-line"></div>
+        <div class="ccbr-step" id="ccbr-step-ind-3" data-step="3" role="button">
+            <span class="ccbr-step-num">3</span>
+            <span class="ccbr-step-label">Region Comparison</span>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- STEP 1 — Prerequisites / Documentation                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <div class="ccbr-step-panel" id="ccbr-step-1">
+        <h5 class="mb-2"><i class="bi bi-currency-exchange"></i> Cross-Region Cost Comparison</h5>
+        <p class="ccbr-helper-text">
+            This tool requires <strong>Azure Cost Management + Billing</strong> exports.
+            Select your billing account type to see the appropriate download instructions.
+        </p>
+
+        <!-- Agreement type selector cards -->
+        <div class="ccbr-mode-cards mb-3">
+            <div class="ccbr-mode-card ccbr-mode-active" data-agreement="ea">
+                <div class="ccbr-mode-icon"><i class="bi bi-building"></i></div>
+                <div class="ccbr-mode-content">
+                    <h6 class="ccbr-mode-title">Enterprise Agreement (EA)</h6>
+                    <p class="ccbr-mode-desc">For organizations with an EA enrollment billing account.</p>
+                </div>
+            </div>
+            <div class="ccbr-mode-card" data-agreement="mca">
+                <div class="ccbr-mode-icon"><i class="bi bi-person-badge"></i></div>
+                <div class="ccbr-mode-content">
+                    <h6 class="ccbr-mode-title">MCA / MPA <span class="ccbr-badge ccbr-badge-coming-soon">Coming soon</span></h6>
+                    <p class="ccbr-mode-desc">For Microsoft Customer Agreement or Microsoft Partner Agreement accounts.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MCA not supported warning -->
+        <div class="alert alert-warning small d-none" id="ccbr-mca-warning">
+            <i class="bi bi-exclamation-triangle"></i>
+            <strong>MCA / MPA is not yet supported.</strong>
+            The download instructions are shown for reference, but Step 2 and 3 are currently only available for Enterprise Agreement (EA) billing accounts.
+        </div>
+
+        <!-- File download instructions (shown after selecting agreement type) -->
+        <div class="ccbr-prereq-grid" id="ccbr-prereq-docs">
+            <!-- Required: Usage Details -->
+            <div class="ccbr-info-card">
+                <div class="ccbr-card-header">
+                    <span class="ccbr-badge ccbr-badge-required">Required</span>
+                    <h6>Usage Details / Cost Export</h6>
+                </div>
+                <div class="ccbr-card-body">
+                    <p class="ccbr-card-desc">
+                        The usage details export contains all billed line items including
+                        per-resource, per-day usage and cost data for a single billing month.
+                    </p>
+
+                    <div id="ccbr-doc-ea">
+                        <ol class="ccbr-steps-list">
+                            <li>Sign in to the <a href="https://portal.azure.com/" target="_blank" rel="noopener">Azure Portal</a></li>
+                            <li>Search for <strong>Cost Management + Billing</strong></li>
+                            <li>Select the billing scope for your <strong>EA billing account</strong></li>
+                            <li>Select <strong>Usage + charges</strong></li>
+                            <li>For the desired month, select <strong>Download</strong></li>
+                            <li>Under <strong>Usage Details</strong>, select charge type and click <strong>Prepare document</strong></li>
+                            <li>When ready, click <strong>Download csv</strong></li>
+                        </ol>
+                        <div class="ccbr-note-box mt-2">
+                            <i class="bi bi-book"></i>
+                            <a href="https://learn.microsoft.com/en-us/azure/cost-management-billing/understand/download-azure-daily-usage#download-usage-for-ea-customers"
+                               target="_blank" rel="noopener">EA usage download documentation</a>
+                        </div>
+                    </div>
+
+                    <div id="ccbr-doc-mca" class="d-none">
+                        <ol class="ccbr-steps-list">
+                            <li>Sign in to the <a href="https://portal.azure.com/" target="_blank" rel="noopener">Azure Portal</a></li>
+                            <li>Search for <strong>Cost Management + Billing</strong></li>
+                            <li>Select a <strong>billing scope</strong> (billing profile)</li>
+                            <li>On the overview page, under <strong>Shortcuts</strong>, click <strong>Download usage and prices</strong></li>
+                            <li>Under <strong>Azure usage file</strong>, select <strong>Prepare</strong></li>
+                            <li>When ready, click <strong>Download</strong></li>
+                        </ol>
+                        <div class="ccbr-note-box mt-2">
+                            <i class="bi bi-book"></i>
+                            <a href="https://learn.microsoft.com/en-us/azure/cost-management-billing/understand/download-azure-daily-usage#download-usage-for-your-microsoft-customer-agreement"
+                               target="_blank" rel="noopener">MCA usage download documentation</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Optional: Price Sheet -->
+            <div class="ccbr-info-card">
+                <div class="ccbr-card-header">
+                    <span class="ccbr-badge ccbr-badge-optional">Optional</span>
+                    <h6>Price Sheet</h6>
+                </div>
+                <div class="ccbr-card-body">
+                    <p class="ccbr-card-desc">
+                        The price sheet contains your negotiated per-meter prices across all
+                        Azure regions. Used for cross-region cost comparison in Step 3.
+                    </p>
+
+                    <div id="ccbr-doc-ps-ea">
+                        <ol class="ccbr-steps-list">
+                            <li>In <strong>Cost Management + Billing</strong>, select your EA billing scope</li>
+                            <li>Go to <strong>Usage + charges</strong></li>
+                            <li>For the same month, click <strong>Download</strong></li>
+                            <li>Under <strong>Price Sheet</strong>, click <strong>Prepare document</strong></li>
+                            <li>When ready, click <strong>Download Azure price sheet</strong></li>
+                        </ol>
+                    </div>
+
+                    <div id="ccbr-doc-ps-mca" class="d-none">
+                        <ol class="ccbr-steps-list">
+                            <li>In <strong>Cost Management + Billing</strong>, go to <strong>Invoices</strong></li>
+                            <li>Find the invoice row for the billing period</li>
+                            <li>Click the ellipsis (<strong>&hellip;</strong>) at the end of the row</li>
+                            <li>Select <strong>Azure price sheet</strong></li>
+                            <li>The file downloads automatically when ready</li>
+                        </ol>
+                    </div>
+
+                    <div class="ccbr-note-box mt-2">
+                        <i class="bi bi-book"></i>
+                        <a href="https://learn.microsoft.com/en-us/azure/cost-management-billing/manage/ea-pricing"
+                           target="_blank" rel="noopener">Price sheet download documentation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-end">
+            <button class="btn btn-primary" id="ccbr-next-to-step2">
+                Continue to upload <i class="bi bi-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- STEP 2 — Upload & analyse Detail Enrollment                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <div class="ccbr-step-panel d-none" id="ccbr-step-2">
+
+        <!-- Upload zone (shown until file is loaded) -->
+        <div class="ccbr-upload-section" id="ccbr-upload-section">
+            <div class="ccbr-drop-zone" id="ccbr-drop-zone">
+                <i class="bi bi-cloud-upload fs-1 text-body-secondary"></i>
+                <p class="mb-1">Drag &amp; drop your <strong>Detail Enrollment CSV</strong> here</p>
+                <p class="text-body-secondary small mb-2">or</p>
+                <label class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-folder2-open"></i> Browse files
+                    <input type="file" accept=".csv" id="ccbr-file-input" hidden>
+                </label>
+            </div>
+        </div>
+
+        <!-- File info bar -->
+        <div class="ccbr-file-bar d-none" id="ccbr-file-bar">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <i class="bi bi-file-earmark-spreadsheet text-primary"></i>
+                <strong id="ccbr-file-name"></strong>
+                <span class="badge bg-secondary" id="ccbr-row-count"></span>
+                <span class="badge bg-info" id="ccbr-file-month"></span>
+                <button class="btn btn-sm btn-outline-danger ms-auto" id="ccbr-clear-btn"
+                        title="Clear file">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Region filter -->
+        <div class="ccbr-filters d-none" id="ccbr-filters">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-4">
+                    <label for="ccbr-meter-region-select" class="form-label form-label-sm">
+                        Source Region
+                    </label>
+                    <select class="form-select form-select-sm" id="ccbr-meter-region-select">
+                        <option value="">— select source region —</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <span class="badge bg-info" id="ccbr-filtered-count"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aggregated SKU table + Billing summary side-by-side -->
+        <div class="ccbr-data-panels d-none" id="ccbr-data-panels">
+            <div class="row g-3">
+                <div class="col-lg-8">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <h6 class="mb-0"><i class="bi bi-list-columns-reverse"></i> Aggregated SKU Costs</h6>
+                        <button class="btn btn-outline-secondary btn-sm ms-auto" id="ccbr-csv-step2"
+                                title="Download CSV">
+                            <i class="bi bi-download"></i> CSV
+                        </button>
+                    </div>
+                    <div class="ccbr-table-scroll">
+                        <table class="table table-sm table-striped ccbr-table" id="ccbr-preview-table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Meter</th>
+                                    <th>Pricing</th>
+                                    <th class="text-end">Cost</th>
+                                    <th class="text-end">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h6 class="mb-2"><i class="bi bi-receipt-cutoff"></i> Billing Summary</h6>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="fw-bold" id="ccbr-billing-total"></span>
+                        <span class="badge bg-secondary" id="ccbr-billing-sku-count"></span>
+                    </div>
+                    <div class="ccbr-cost-bar mb-2" id="ccbr-cost-bar"></div>
+                    <div class="ccbr-table-scroll" style="max-height: 340px;">
+                        <table class="table table-sm ccbr-table" id="ccbr-billing-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Service</th>
+                                    <th class="text-end">Cost</th>
+                                    <th class="text-end">%</th>
+                                    <th class="text-end">SKUs</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary btn-sm" id="ccbr-back-to-step1">
+                <i class="bi bi-arrow-left"></i> Prerequisites
+            </button>
+            <button class="btn btn-primary btn-sm d-none" id="ccbr-next-to-step3">
+                Compare Regions <i class="bi bi-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- STEP 3 — Region Comparison via PriceSheet                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <div class="ccbr-step-panel d-none" id="ccbr-step-3">
+
+        <h5 class="mb-3"><i class="bi bi-arrow-left-right"></i> Cross-Region Cost Comparison</h5>
+
+        <!-- PriceSheet upload -->
+        <div id="ccbr-ps-upload-section">
+            <div class="ccbr-drop-zone" id="ccbr-ps-drop-zone">
+                <i class="bi bi-file-earmark-zip fs-1 text-body-secondary"></i>
+                <p class="mb-1">Drag &amp; drop your <strong>PriceSheet ZIP</strong> here</p>
+                <p class="text-body-secondary small mb-2">or</p>
+                <label class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-folder2-open"></i> Browse files
+                    <input type="file" accept=".zip" id="ccbr-ps-file-input" hidden>
+                </label>
+            </div>
+        </div>
+
+        <!-- PriceSheet file bar -->
+        <div class="ccbr-file-bar d-none" id="ccbr-ps-file-bar">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <i class="bi bi-file-earmark-zip text-primary"></i>
+                <strong id="ccbr-ps-file-name"></strong>
+                <span class="badge bg-secondary" id="ccbr-ps-file-size"></span>
+                <button class="btn btn-sm btn-outline-danger ms-auto" id="ccbr-ps-clear-btn"
+                        title="Clear file">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Target region selector + compare button -->
+        <div class="ccbr-ps-controls d-none" id="ccbr-ps-controls">
+            <div class="row g-2 align-items-end mb-3">
+                <div class="col-md-3">
+                    <label class="form-label form-label-sm">Source Region</label>
+                    <input type="text" class="form-control form-control-sm" id="ccbr-ps-source"
+                           disabled>
+                </div>
+                <div class="col-md-3">
+                    <label for="ccbr-ps-target" class="form-label form-label-sm">
+                        Target Region
+                    </label>
+                    <select class="form-select form-select-sm" id="ccbr-ps-target">
+                        <option value="">— select target region —</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary btn-sm" id="ccbr-ps-compare-btn" disabled>
+                        <i class="bi bi-arrow-left-right"></i> Compare Pricing
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress d-none mt-3" id="ccbr-ps-progress" style="height: 4px;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                 style="width: 100%"></div>
+        </div>
+
+        <!-- Results -->
+        <div class="ccbr-results d-none" id="ccbr-ps-results">
+            <hr>
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <h6 class="mb-0"><i class="bi bi-bar-chart-line"></i> Comparison Results</h6>
+                <button class="btn btn-outline-secondary btn-sm ms-auto" id="ccbr-csv-step3"
+                        title="Download CSV">
+                    <i class="bi bi-download"></i> CSV
+                </button>
+            </div>
+
+            <!-- Summary cards -->
+            <div class="row g-2 mb-3">
+                <div class="col-sm-3">
+                    <div class="card ccbr-summary-card">
+                        <div class="card-body p-2 text-center">
+                            <div class="small text-body-secondary">
+                                Source Total
+                                <i class="bi bi-info-circle"
+                                   data-bs-toggle="tooltip" data-bs-placement="top"
+                                   data-bs-title="Only includes items with a matching SKU in the target region. Unmatched items are excluded from this total."
+                                   style="cursor:help;"></i>
+                            </div>
+                            <div class="fw-bold fs-5" id="ccbr-ps-source-total">–</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card ccbr-summary-card">
+                        <div class="card-body p-2 text-center">
+                            <div class="small text-body-secondary">Estimated Target</div>
+                            <div class="fw-bold fs-5" id="ccbr-ps-target-total">–</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card ccbr-summary-card">
+                        <div class="card-body p-2 text-center">
+                            <div class="small text-body-secondary">Difference</div>
+                            <div class="fw-bold fs-5" id="ccbr-ps-diff-total">–</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card ccbr-summary-card">
+                        <div class="card-body p-2 text-center">
+                            <div class="small text-body-secondary">Change</div>
+                            <div class="fw-bold fs-5" id="ccbr-ps-pct-total">–</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-warning d-none small" id="ccbr-ps-not-found-alert"></div>
+
+            <div class="ccbr-table-scroll">
+                <table class="table table-sm table-striped ccbr-table" id="ccbr-ps-results-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Meter</th>
+                            <th>Pricing</th>
+                            <th class="text-end">Source Cost</th>
+                            <th class="text-end">Quantity</th>
+                            <th class="text-end">Tgt Unit $</th>
+                            <th class="text-end">Est. Target Cost</th>
+                            <th class="text-end">Difference</th>
+                            <th class="text-end">% Chg</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-secondary btn-sm" id="ccbr-back-to-step2">
+                <i class="bi bi-arrow-left"></i> Usage Analysis
+            </button>
+        </div>
+    </div>
+
+    <!-- Error (shared across steps) -->
+    <div class="alert alert-danger d-none mt-3" id="ccbr-error"></div>
+</div>

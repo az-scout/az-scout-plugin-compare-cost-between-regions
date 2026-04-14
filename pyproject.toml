@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "az-scout-plugin-compare-cost-between-regions"
+dynamic = ["version"]
+description = "az-scout plugin for comparing Azure costs between regions using Cost Management exports"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "az-scout",
+    "fastapi",
+    "python-multipart>=0.0.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/az-scout/az-scout-plugin-compare-cost-between-regions"
+Repository = "https://github.com/az-scout/az-scout-plugin-compare-cost-between-regions"
+Issues = "https://github.com/az-scout/az-scout-plugin-compare-cost-between-regions/issues"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0",
+    "pytest-cov>=6.0",
+    "ruff>=0.11",
+    "mypy>=1.15",
+    "httpx>=0.28",
+]
+
+[project.entry-points."az_scout.plugins"]
+compare_cost_between_regions = "az_scout_compare_cost_between_regions:plugin"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/az_scout_compare_cost_between_regions"]
+
+[tool.hatch.version]
+source = "vcs"
+raw-options.version_scheme = "guess-next-dev"
+raw-options.local_scheme = "no-local-version"
+raw-options.fallback_version = "0.1.0"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/az_scout_compare_cost_between_regions/_version.py"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = ["src/az_scout_compare_cost_between_regions/_version.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

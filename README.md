@@ -1,0 +1,129 @@
+# az-scout-plugin-compare-cost-between-regions
+
+A minimal az-scout plugin scaffold.
+
+Use the generator command to create a fresh plugin from this scaffold:
+
+```bash
+# From any environment with az-scout installed
+az-scout create-plugin
+```
+
+The script asks for plugin name, slug, output location, and repository details,
+then creates a complete plugin project with package/module names and static file
+paths already renamed.
+
+## Features
+
+- **UI tab** with subscription selector that reacts to the main app's tenant & region
+- **API route** that receives tenant, region, and subscription context
+- **MCP tool** exposed on the MCP server
+- **Static assets** — CSS auto-loaded, HTML fragment fetched at runtime
+- **URL hash routing** — `#example` selects the plugin tab
+
+## Setup
+
+### Recommended (generator command)
+
+```bash
+# From any environment with az-scout installed
+az-scout create-plugin
+
+# Then move into the generated plugin directory
+cd /path/to/generated/az-scout-myplugin
+uv sync --group dev
+uv pip install -e .
+az-scout
+```
+
+Optional repo-dev fallback:
+
+```bash
+# From the az-scout repository root
+python3 tools/plugin-scaffold/create_plugin.py
+```
+
+### Manual (copy + rename)
+
+```bash
+# Clone in /tmp to export scaffold without git history
+git clone https://github.com/az-scout/az-scout.git /tmp/az-scout
+cp -r /tmp/az-scout/docs/plugin-scaffold ./az-scout-myplugin
+cd ./az-scout-myplugin
+
+# Update pyproject.toml: name, entry point, package name
+# Rename src/az_scout_compare_cost_between_regions/ to match your package
+
+uv pip install -e .
+az-scout  # plugin is auto-discovered
+```
+
+## Structure
+
+```text
+az-scout-plugin-compare-cost-between-regions/
+├── .github/
+│   ├── copilot-instructions.md  # Copilot context for this plugin
+│   └── workflows/
+│       └── ci.yml               # CI pipeline (lint + test, Python 3.11–3.13)
+├── pyproject.toml
+├── README.md
+└── src/
+    └── az_scout_compare_cost_between_regions/
+        ├── __init__.py          # Plugin class + module-level `plugin` instance
+        ├── routes.py            # FastAPI APIRouter (optional)
+        ├── tools.py             # MCP tool functions (optional)
+        └── static/
+            ├── css/
+            │   └── compare-cost-between-regions.css      # Plugin styles (auto-loaded via css_entry)
+            ├── html/
+            │   └── compare-cost-between-regions-tab.html # HTML fragment (fetched by JS at runtime)
+            └── js/
+                └── compare-cost-between-regions-tab.js   # Tab UI logic (auto-loaded via js_entry)
+```
+
+## How it works
+
+1. The plugin JS loads the HTML fragment into `#plugin-tab-compare-cost-between-regions`.
+2. It listens to `azscout:*` context events from the core app.
+3. When both are set, it fetches subscriptions from `/api/subscriptions`.
+4. The user picks a subscription and clicks the button.
+5. The plugin calls `GET /plugins/compare-cost-between-regions/hello?subscription_name=…&tenant=…&region=…`.
+
+## Quality checks
+
+The scaffold includes GitHub Actions workflows in `.github/workflows/`:
+
+- **`ci.yml`** — Runs lint (ruff + mypy) and tests (pytest) on Python 3.11–3.13, triggered on push/PR to `main`.
+- **`publish.yml`** — Builds, creates a GitHub Release, and publishes to PyPI via trusted publishing (OIDC). Triggered on version tags (`v*`). Requires a `pypi` environment configured in your repo settings with OIDC trusted publishing.
+
+Run the same checks locally:
+
+```bash
+uv run ruff check src/ tests/
+uv run ruff format --check src/ tests/
+uv run mypy src/
+uv run pytest
+```
+
+To publish a release:
+
+```bash
+git tag v2026.2.0
+git push origin v2026.2.0
+```
+
+## Copilot support
+
+The `.github/copilot-instructions.md` file provides context to GitHub Copilot about
+the plugin structure, conventions, and az-scout plugin API. It helps Copilot generate
+code that follows the project patterns.
+
+
+## License
+
+[MIT](LICENSE.txt)
+
+## Disclaimer
+
+> **This tool is not affiliated with Microsoft.** All capacity, pricing, and latency information are indicative and not a guarantee of deployment success. Spot placement scores are probabilistic. Quota values and pricing are dynamic and may change between planning and actual deployment. Latency values are based on [Microsoft published statistics](https://learn.microsoft.com/en-us/azure/networking/azure-network-latency) and must be validated with in-tenant measurements.

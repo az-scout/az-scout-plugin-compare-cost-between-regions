@@ -1,0 +1,336 @@
+/* Cost Comparison plugin styles */
+
+/* Step panels */
+#ccbr-step-1 {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Upload sections (step 2 & 3) */
+.ccbr-upload-section,
+#ccbr-ps-upload-section {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Step indicators */
+.ccbr-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 0.75rem 0;
+    margin-bottom: 1.5rem;
+}
+
+.ccbr-step {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+}
+
+.ccbr-step.active,
+.ccbr-step.completed {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.ccbr-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: transparent;
+    color: var(--bs-secondary-color);
+    border: 2px solid var(--bs-border-color);
+    transition: all 0.2s;
+}
+
+.ccbr-step.active .ccbr-step-num {
+    background: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: #fff;
+}
+
+.ccbr-step.completed .ccbr-step-num {
+    background: color-mix(in srgb, var(--bs-success) 20%, var(--bs-body-bg));
+    border-color: var(--bs-success);
+    color: var(--bs-success);
+}
+
+.ccbr-step-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--bs-secondary-color);
+    white-space: nowrap;
+}
+
+.ccbr-step.active .ccbr-step-label {
+    color: var(--bs-body-color);
+}
+
+.ccbr-step-line {
+    flex: 1;
+    max-width: 80px;
+    height: 2px;
+    background: var(--bs-border-color);
+    margin: 0 0.25rem;
+}
+
+.ccbr-step.active:hover .ccbr-step-num,
+.ccbr-step.completed:hover .ccbr-step-num {
+    filter: brightness(1.15);
+}
+
+/* Info cards (prerequisites) */
+.ccbr-info-card {
+    background: var(--bs-tertiary-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.ccbr-card-header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--bs-border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ccbr-card-header h6 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.ccbr-card-body {
+    padding: 1rem;
+}
+
+.ccbr-card-desc {
+    font-size: 0.8rem;
+    color: var(--bs-secondary-color);
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+.ccbr-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.ccbr-badge-required {
+    background: color-mix(in srgb, var(--bs-primary) 15%, var(--bs-body-bg));
+    color: var(--bs-primary);
+}
+
+.ccbr-badge-optional {
+    background: color-mix(in srgb, var(--bs-secondary-color) 10%, var(--bs-body-bg));
+    color: var(--bs-secondary-color);
+}
+
+.ccbr-badge-coming-soon {
+    background: color-mix(in srgb, var(--bs-warning) 15%, var(--bs-body-bg));
+    color: var(--bs-warning);
+    font-size: 0.6rem;
+    vertical-align: middle;
+    margin-left: 0.25rem;
+}
+
+.ccbr-note-box {
+    font-size: 0.8rem;
+    color: var(--bs-secondary-color);
+    background: color-mix(in srgb, var(--bs-info) 8%, var(--bs-body-bg));
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    line-height: 1.5;
+}
+
+.ccbr-prereq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.ccbr-steps-list {
+    font-size: 0.8rem;
+    padding-left: 1.25rem;
+    margin-bottom: 0;
+    line-height: 1.8;
+}
+
+.ccbr-helper-text {
+    font-size: 0.85rem;
+    color: var(--bs-secondary-color);
+    margin-bottom: 1rem;
+}
+
+/* Mode selection cards (EA / MCA) */
+.ccbr-mode-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.75rem;
+}
+
+.ccbr-mode-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--bs-tertiary-bg);
+    border: 2px solid var(--bs-border-color);
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.ccbr-mode-card:hover {
+    border-color: var(--bs-primary);
+}
+
+.ccbr-mode-card.ccbr-mode-active {
+    border-color: var(--bs-primary);
+    background: color-mix(in srgb, var(--bs-primary) 8%, var(--bs-body-bg));
+}
+
+.ccbr-mode-icon {
+    font-size: 1.5rem;
+    color: var(--bs-secondary-color);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.ccbr-mode-card.ccbr-mode-active .ccbr-mode-icon {
+    color: var(--bs-primary);
+}
+
+.ccbr-mode-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.ccbr-mode-desc {
+    font-size: 0.75rem;
+    color: var(--bs-secondary-color);
+    margin-bottom: 0;
+    line-height: 1.4;
+}
+
+/* Drop zone */
+.ccbr-drop-zone {
+    border: 2px dashed var(--bs-border-color);
+    border-radius: 0.75rem;
+    padding: 2.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.ccbr-drop-zone:hover,
+.ccbr-drag-over {
+    border-color: var(--bs-primary);
+    background: rgba(var(--bs-primary-rgb), 0.04);
+}
+
+.ccbr-drop-zone-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    border-style: dotted;
+}
+
+/* File bar */
+.ccbr-file-bar {
+    padding: 0.5rem 0.75rem;
+    background: var(--bs-tertiary-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Filters */
+.ccbr-filters {
+    margin-bottom: 1rem;
+}
+
+/* Tables */
+.ccbr-table-scroll {
+    max-height: 450px;
+    overflow: auto;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.ccbr-table {
+    margin-bottom: 0;
+    font-size: 0.82rem;
+}
+
+.ccbr-table thead th {
+    position: sticky;
+    top: 0;
+    background: var(--bs-body-bg);
+    z-index: 1;
+    border-bottom: 2px solid var(--bs-border-color);
+    white-space: nowrap;
+}
+
+.ccbr-table td {
+    white-space: nowrap;
+}
+
+/* Summary cards */
+.ccbr-summary-card {
+    border-left: 3px solid var(--bs-primary);
+}
+
+/* Billing summary */
+.ccbr-cost-bar {
+    display: flex;
+    height: 14px;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    background: var(--bs-tertiary-bg);
+}
+
+.ccbr-cost-bar-seg {
+    height: 100%;
+    transition: width 0.3s;
+}
+
+.ccbr-color-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+/* Dark mode */
+[data-theme="dark"] .ccbr-drop-zone {
+    border-color: var(--bs-border-color);
+}
+
+[data-theme="dark"] .ccbr-drop-zone:hover,
+[data-theme="dark"] .ccbr-drag-over {
+    background: rgba(var(--bs-primary-rgb), 0.08);
+}
+
+[data-theme="dark"] .ccbr-table thead th {
+    background: var(--bs-body-bg);
+}
