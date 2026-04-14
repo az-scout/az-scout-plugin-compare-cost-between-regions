@@ -15,14 +15,16 @@ This is an **az-scout plugin** — a Python package that extends [az-scout](http
 
 ```
 src/az_scout_compare_cost_between_regions/
-├── __init__.py          # Plugin class + module-level `plugin` instance
-├── routes.py            # FastAPI APIRouter (mounted at /plugins/compare-cost-between-regions/)
-├── tools.py             # MCP tool functions (exposed on the az-scout MCP server)
+├── __init__.py      # Plugin class + module-level `plugin` instance
+├── _log.py          # Logger helper
+├── pricing.py       # PriceSheet matching, UoM normalization, cost comparison engine
+├── routes.py        # FastAPI APIRouter: /compare-pricesheet, /region-mapping
+├── tools.py         # MCP tool: compare_cost_between_regions
 └── static/
     ├── css/
     │   └── compare-cost-between-regions.css      # Plugin styles (auto-loaded via css_entry)
     ├── html/
-    │   └── compare-cost-between-regions-tab.html # HTML fragment (fetched by JS at runtime)
+    │   └── compare-cost-between-regions-tab.html # HTML fragment (3-step wizard)
     └── js/
         └── compare-cost-between-regions-tab.js   # Tab UI logic (auto-loaded via js_entry)
 ```
@@ -65,6 +67,23 @@ compare_cost_between_regions = "az_scout_compare_cost_between_regions:plugin"
 - The docstring becomes the tool description in the MCP server and AI chat.
 - Tools are automatically available in the AI chat assistant after plugin registration.
 - Keep tool functions stateless — use parameters, not global state.
+
+## Plugin-specific architecture
+
+### PriceSheet matching (2-step MeterId → Product-key)
+
+1. **Source lookup** — Use the enrollment MeterId to find the source PriceSheet row (MeterId + PriceType + OfferId)
+2. **Product key** — Strip the region suffix from Product, build a region-agnostic key: (product_base, MeterName, PriceType, Term, OfferId)
+3. **Target lookup** — Find the same product key in the target region's PriceSheet
+4. **UoM normalization** — Parse UnitOfMeasure into canonical multipliers (handles `TB` vs `GB`, `Hours` vs `Month`, etc.)
+5. **BasePrice disambiguation** — When multiple pricing tiers share the same product key, pick the one whose normalized BasePrice is closest to the source
+
+### Key files
+
+- **`pricing.py`** contains all matching logic, region mapping (`_ARM_TO_METER_REGION`), UoM parsing (`_parse_uom`), and `compute_comparison`
+- **`routes.py`** has the `/compare-pricesheet` endpoint (multipart form: ZIP + items JSON) and `/region-mapping` (serves ARM ↔ MeterRegion dicts)
+- **`tools.py`** has the MCP tool that reads a CSV file and calls `compute_comparison`
+- **Region mapping** is the single source of truth in `pricing.py` — the JS frontend fetches it via `/region-mapping`
 
 ## Azure ARM helpers
 

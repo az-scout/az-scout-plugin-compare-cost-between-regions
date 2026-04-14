@@ -1,7 +1,8 @@
 """az-scout plugin for comparing Azure costs between regions.
 
-Upload an Azure Cost Management export CSV, select a source region and month,
-then compare pricing against another Azure region using the public Retail Prices API.
+Upload an Azure EA Detail Enrollment CSV to analyse usage by region,
+then upload a PriceSheet ZIP to compare costs against another Azure
+region using your negotiated prices.
 """
 
 from __future__ import annotations
@@ -61,10 +62,14 @@ class CompareCostBetweenRegionsPlugin:
 
     def get_system_prompt_addendum(self) -> str | None:
         return (
-            "The `compare_cost_between_regions` tool analyses an Azure Cost Management "
-            "export CSV to compare costs between two Azure regions. Provide a CSV file "
-            "path, year/month, source MeterRegion, and both source and target ARM region "
-            "names. It queries the Azure Retail Prices API to estimate target-region costs."
+            "The `compare_cost_between_regions` tool analyses an Azure EA "
+            "Detail Enrollment CSV to compare costs between two Azure regions. "
+            "Provide a CSV file path, source MeterRegion (e.g. 'SE Central'), "
+            "and both source and target ARM region names (e.g. 'swedencentral', "
+            "'northeurope'). It aggregates usage by MeterId and returns a "
+            "comparison structure. For PriceSheet-based comparison, use the "
+            "web UI (Step 3) which uploads the ZIP and matches via the "
+            "2-step MeterId → Product-key algorithm with UoM normalization."
         )
 
 
