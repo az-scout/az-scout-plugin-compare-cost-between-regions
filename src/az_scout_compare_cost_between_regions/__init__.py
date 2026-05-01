@@ -28,8 +28,8 @@ except PackageNotFoundError:
 class CompareCostBetweenRegionsPlugin:
     """Compare Azure costs between regions using Cost Management export data."""
 
-    name = "compare-cost-between-regions"
-    version = __version__
+    name: str = "compare-cost-between-regions"
+    version: str = __version__
 
     def get_router(self) -> APIRouter | None:
         from az_scout_compare_cost_between_regions.routes import router
