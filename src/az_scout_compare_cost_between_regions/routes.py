@@ -55,6 +55,12 @@ async def compare_with_pricesheet(
     if not file.filename.lower().endswith(".zip"):
         raise PluginValidationError("File must be a .zip archive")
 
+    content_length_str = file.headers.get("content-length")
+    try:
+        if content_length_str and int(content_length_str) > _MAX_ZIP_SIZE:
+            raise PluginValidationError("ZIP file exceeds 500 MB limit")
+    except ValueError:
+        pass  # Ignore malformed Content-Length; the post-read check will catch oversized files
     contents = await file.read()
     if len(contents) > _MAX_ZIP_SIZE:
         raise PluginValidationError("ZIP file exceeds 500 MB limit")
